@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-200 rounded-3xl p-12">
+    <div class="col-span-3">
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 </template>

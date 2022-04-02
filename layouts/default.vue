@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden min-h-screen">
+  <v-app class="wrapper">
         <Nuxt />
       <!-- div>
         <EsNav />
@@ -10,5 +10,5 @@
       <client-only>
         <CookieBanner />
       </client-only> -->
-    </div>
+    </v-app>
 </template>

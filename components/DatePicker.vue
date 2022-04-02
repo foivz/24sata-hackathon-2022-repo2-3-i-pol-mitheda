@@ -1,8 +1,5 @@
-<!-- custom made input field with Vuetify Datepicker modal
-https://vuetifyjs.com/en/components/date-pickers/ -->
-
 <template>
-  <div class="date-picker">
+  <div>
     <v-dialog
         ref="dialog"
         v-model="date_modal"
@@ -14,7 +11,7 @@ https://vuetifyjs.com/en/components/date-pickers/ -->
         <div class="input-container">
           <input
               type="text"
-              :placeholder="$t('form.placeholder.date')"
+              placeholder="Date"
               readonly
               v-model="date_value"
               v-bind="attrs"
@@ -25,22 +22,21 @@ https://vuetifyjs.com/en/components/date-pickers/ -->
       <v-date-picker
           v-model="date_value"
           color="#000000"
-          scrollable>
-
-        <v-spacer></v-spacer>
+          scrollable 
+          range>
 
         <v-btn
             text
             color="color__primary"
             @click="date_modal = false">
-          {{ $t('general.button.cancel') }}
+          Cancel
         </v-btn>
 
         <v-btn
             text
             color="color__primary"
             @click="$refs.dialog.save(date_value)">
-          {{ $t('general.button.ok') }}
+          Ok
         </v-btn>
       </v-date-picker>
     </v-dialog>
