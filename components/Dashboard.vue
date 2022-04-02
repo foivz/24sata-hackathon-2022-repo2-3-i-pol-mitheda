@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex">
         <!-- sidebar -->
         <aside :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
             <v-icon class="openSidebar" @click="sidebarExpanded = !sidebarExpanded">mdi-menu</v-icon>
@@ -10,6 +10,7 @@
                 <span class="sidebar-text">Expenses</span>
            </NuxtLink>
         </aside>
+        <DoughnutChart />
     </div>
 </template>
 
