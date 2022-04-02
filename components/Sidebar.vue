@@ -45,14 +45,18 @@
             <v-list
             dense
             nav
-        >
-          <v-list-item
-          >
+            >
+                <v-list-item
+                link
+                >
+                <v-list-item-icon>
+                    <v-icon>mdi-logout</v-icon>
+                </v-list-item-icon>
                 <v-list-item-content>
                     <v-list-item-title>Logout</v-list-item-title>
                 </v-list-item-content>
-          </v-list-item>
-        </v-list>
+                </v-list-item>
+            </v-list>
         </template>
         </v-navigation-drawer>
     </v-card>
