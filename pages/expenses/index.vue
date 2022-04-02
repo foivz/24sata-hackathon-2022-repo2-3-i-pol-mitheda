@@ -44,12 +44,26 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark v-bind="attrs" v-on="on">
-              Open Dialog
+              Add expense
             </v-btn>
           </template>
           <v-card>
             <v-card-title>
-              <span class="text-h5">User Profile</span>
+              <span class="text-h5">Add expense</span>
+            </v-card-title>
+
+            <v-card-title>
+              <form @change="upload">
+                <input
+                  type="file"
+                  ref="getFile"
+                  style="display: none"
+                  name="thefile"
+                />
+              </form>
+              <v-btn color="blue darken-1" text @click="$refs.getFile.click()">
+                Pre-fill from invoice
+              </v-btn>
             </v-card-title>
             <v-card-text>
               <v-container>
@@ -65,6 +79,12 @@
                     <v-text-field
                       label="Merchant"
                       v-model="newExpense.merchant"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Date"
+                      v-model="newExpense.date"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -136,13 +156,14 @@ export default {
         newId: 0,
         title: "",
         merchant: "",
+        date: "",
         expense_items: [],
       },
     };
   },
   async mounted() {
     this.$nextTick(async () => {
-      const expensesx = await this.$axios.$get("/api/expenses", {
+      const expensesx = await this.$axios.$get("/api/expenses/user", {
         params: {
           token: this.$store.state.user.token,
         },
@@ -164,8 +185,8 @@ export default {
           sortable: false,
         },
         {
-          text: "Title",
-          value: "title",
+          text: "Category",
+          value: "category",
         },
         {
           text: "Date",
@@ -206,6 +227,24 @@ export default {
     addNewItem() {
       this.newExpense.expense_items.push({ title: "", amount: "", price: "" });
     },
+    async upload(event) {
+      event.preventDefault();
+      let formData = new FormData();
+      console.log(this.$refs.getFile.files[0]);
+      formData.append("thefile", this.$refs.getFile.files[0]);
+
+      const { data: response } = await this.$axios.post("/api/scan", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      this.newExpense.date = response.date || this.newExpense.date;
+      this.newExpense.merchant = response.merchant || this.newExpense.merchant;
+      this.newExpense.expense_items = response.items;
+    },
   },
 };
 </script>
+
+<style></style>
