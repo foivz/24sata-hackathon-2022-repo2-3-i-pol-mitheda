@@ -19,14 +19,11 @@
 
 <script>
 export default {
-  data: function() {
+  data() {
       return {
           sidebarExpanded: true
       }
    
-  },
-  methods: {
-    
   }
 };
 </script>
