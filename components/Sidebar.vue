@@ -43,13 +43,18 @@
 
 <script>
 export default {
-  data() {
+    computed: {
+        userName() {
+            return this.$store.state.user.userObj?.accessToken?.payload?.username ?? "ERROR"
+        }
+    },
+    data() {
       return {
           sidebarExpanded: true,
           items: [
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
             { title: 'Expenses', icon: 'mdi-image', route: '/expenses' },
-            { title: 'Settings', icon: 'mdi-account', route: '/user' },
+            { title: 'Account', icon: 'mdi-account', route: '/user' },
         ],
       }
    
@@ -59,6 +64,7 @@ export default {
 
 <style lang="scss">
 .sidebar {
+    position: relative;
     background: #fff;
     height: 100vh;
     box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
@@ -84,6 +90,13 @@ export default {
         vertical-align: middle;
     }
 
+    .sidebarBottom {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+
+    }
 }
 
 
