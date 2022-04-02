@@ -1,6 +1,6 @@
 <template>
     <div class="h-full w-full">
-        <div class="mb-16 ">
+        <div class="mb-16">
             <div class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64" style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);">
                 <DatePicker @input="(e) => selectedDate = e" class="col-span-2"/>
             </div>
