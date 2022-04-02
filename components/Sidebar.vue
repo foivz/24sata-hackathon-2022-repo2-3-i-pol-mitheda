@@ -22,9 +22,9 @@
                 <span class="sidebarIco">
                     <v-icon color="#26870f">mdi-account</v-icon>
                 </span>
-                <div class="bg-red-400 flex flex-col">
-                    <p class="sidebar-text">3 i pol luzera</p>
-                    <p class="sidebar-text">logout</p>
+                <div class="flex flex-col">
+                    <p class="sidebar-text" style="margin-bottom: 0px">3 i pol luzera</p>
+                    <p class="sidebar-text" style="margin-bottom: 0px">logout</p>
                 </div>
             </div>
         </NuxtLink>
