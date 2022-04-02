@@ -32,7 +32,10 @@
                 class="col-span-5 p-8"
                 >
                 <Sparkline />
-            </v-card>  
+
+                
+            </v-card> 
+            
         </div>
     </div>
 </template>
