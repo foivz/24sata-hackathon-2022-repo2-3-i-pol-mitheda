@@ -1,5 +1,14 @@
 <template>
-    <div>
+    <div class="relative">
+        <div class="absolute w-full h-full flex flex-col items-center justify-center">
+            <p class="text-lg font-bold" style="margin-bottom:0px">Total:</p>
+            <p class="text-lg font-bold" style="margin-bottom:0px">todo num</p>
+            <div class="flex-">
+                <v-icon v-if="calculateChange" color="#5b9fd1">mdi-arrow-up</v-icon>
+                <v-icon v-else color="#5b9fd1" class="absolute mr-2">mdi-arrow-down</v-icon>
+                <p class="text-lg font-bold" style="margin-bottom:0px">todo num</p>
+            </div>
+        </div>
         <canvas ref="myChart" width="400" height="400"></canvas>
     </div>
 </template>
@@ -40,6 +49,11 @@ export default {
                 }
             })
         })
+    },
+    computed: {
+        calculateChange(){
+            return true
+        }
     }
 }
 </script>

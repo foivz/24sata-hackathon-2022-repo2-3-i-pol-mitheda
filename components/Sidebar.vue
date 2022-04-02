@@ -31,7 +31,7 @@
           >
            <NuxtLink :to="item.route" class="flex w-full">
                 <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
+                    <v-icon :color="item.color">{{ item.icon }}</v-icon>
                 </v-list-item-icon>
         
                 <v-list-item-content>
@@ -73,9 +73,9 @@ export default {
       return {
           sidebarExpanded: true,
           items: [
-            { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
-            { title: 'Expenses', icon: 'mdi-image', route: '/expenses' },
-            { title: 'Account', icon: 'mdi-account', route: '/user' },
+            { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color:"green darken-2" },
+            { title: 'Expenses', icon: 'mdi-image', route: '/expenses', color:"red darken-2" },
+            { title: 'Account', icon: 'mdi-account', route: '/user', color:"blue darken-2" },
         ],
       }
    

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full m-8 grid grid-cols-8">
+  <div class="h-full w-full m-8 grid grid-cols-8 z-50">
     <div class="col-span-8">
      <v-data-table
         :headers="headers"
@@ -38,7 +38,9 @@
 export default {
   data () {
     return {
-      expenses: {}
+      search: '',
+      calories: '',
+      expenses: []
     }
   },
   async mounted() {

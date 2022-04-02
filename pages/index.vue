@@ -20,16 +20,16 @@
             <p class="font-extrabold text-2xl mr-4 text-white" style="margin-bottom: 0px">Dashboard</p>
             <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
         </div>
-        <div class="m-8 grid gap-8" :class="{'grid-cols-6': gridView, 'grid-cols-1': !gridView}">
+        <div class="m-8 grid gap-8" :class="{'grid-cols-8': gridView, 'grid-cols-1': !gridView}">
             <v-card
             elevation="2"
-            class="col-span-2"
+            class="col-span-3"
             >
-                <DoughnutChart class=" bg-white rounded-lg p-12"/>
+                <DoughnutChart class=" bg-white rounded-lg m-4"/>
             </v-card>  
             <v-card
                 elevation="2"
-                class="col-span-4 p-8"
+                class="col-span-5 p-8"
                 >
                 <Sparkline />
             </v-card>  
