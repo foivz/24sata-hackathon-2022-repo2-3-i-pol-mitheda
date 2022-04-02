@@ -1,7 +1,7 @@
 <template>
   <amplify-authenticator>
     <div>
-      <div class="flex">
+      <div class="flex bg-gray-200">
         <Sidebar />
         <Dashboard />
       </div>

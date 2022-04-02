@@ -1,19 +1,32 @@
 <!-- sidebar -->
 <template>
-    <aside :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
-        <v-icon class="openSidebar" @click="sidebarExpanded = !sidebarExpanded">mdi-menu</v-icon>
-        <NuxtLink to="/" class="sidebar-btn">
-            <span class="sidebarIco">
-                <v-icon color="#5b9fd1">mdi-home</v-icon>
-            </span>
-            <span class="sidebar-text">Dashboard</span>
-        </NuxtLink>
-        <a href="/expenses">Expenses test</a>
-        <NuxtLink to="/expenses" class="sidebar-btn">
-            <span class="sidebarIco">
-                <v-icon color="#26870f">mdi-cash</v-icon>
-            </span>
-            <span class="sidebar-text">Expenses</span>
+    <aside class="flex flex-col justify-between" :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
+        <div>
+            <v-icon class="openSidebar" @click="sidebarExpanded = !sidebarExpanded">mdi-menu</v-icon>
+            <NuxtLink to="/" class="sidebar-btn">
+                <span class="sidebarIco">
+                    <v-icon color="#5b9fd1">mdi-home</v-icon>
+                </span>
+                <span class="sidebar-text">Dashboard</span>
+            </NuxtLink>
+            <NuxtLink to="/expenses" class="sidebar-btn">
+                <span class="sidebarIco">
+                    <v-icon color="#26870f">mdi-cash</v-icon>
+                </span>
+                <span class="sidebar-text">Expenses</span>
+            </NuxtLink>
+        </div>
+
+        <NuxtLink to="/user" class="sidebar-btn">
+            <div class="flex items-center">
+                <span class="sidebarIco">
+                    <v-icon color="#26870f">mdi-account</v-icon>
+                </span>
+                <div class="flex flex-col">
+                    <p class="sidebar-text" style="margin-bottom: 0px">3 i pol luzera</p>
+                    <p class="sidebar-text" style="margin-bottom: 0px">logout</p>
+                </div>
+            </div>
         </NuxtLink>
     </aside>
 </template>
