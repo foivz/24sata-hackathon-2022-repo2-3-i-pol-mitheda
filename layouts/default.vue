@@ -27,6 +27,8 @@ export default {
         var resultData = JSON.parse(userObj)
     }
     this.$store.commit('user/set', resultData)
+    this.$store.commit('user/setToken', resultData.accessToken?.jwtToken)
+    console.log(resultData)
   }
 }
 </script>

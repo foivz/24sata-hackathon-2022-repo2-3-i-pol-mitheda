@@ -5,11 +5,15 @@ export const state = () => ({
                 username: "Loading..."
             }
         }
-    }
+    },
+    token: ""
   })
   
   export const mutations = {
     set(state, obj) {
-      state.userObj = obj
+        state.userObj = obj
+    },
+    setToken(state, token) {
+        state.token = token
     }
   }
