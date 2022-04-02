@@ -17,25 +17,36 @@
             </NuxtLink>
         </div>
 
-        <NuxtLink to="/user" class="sidebar-btn">
-            <div class="flex items-center">
+
+       <div class="sidebarBottom">  
+            <NuxtLink to="/user" class="sidebar-btn">
                 <span class="sidebarIco">
-                    <v-icon color="#26870f">mdi-account</v-icon>
+                    <v-icon color="#5b9fd1">mdi-account</v-icon>
                 </span>
-                <div class="flex flex-col">
-                    <p class="sidebar-text" style="margin-bottom: 0px">3 i pol luzera</p>
-                    <p class="sidebar-text" style="margin-bottom: 0px">logout</p>
-                </div>
-            </div>
-        </NuxtLink>
+                <span class="sidebar-text">{{ userName }}</span>
+            </NuxtLink>
+
+
+            <NuxtLink to="/logout" class="sidebar-btn">
+                <span class="sidebarIco">
+                    <v-icon color="#5b9fd1">mdi-exit-run</v-icon>
+                </span>
+                <span class="sidebar-text">Log Out</span>
+            </NuxtLink>
+        </div>
     </aside>
 </template>
 
 <script>
 export default {
-  data() {
+    computed: {
+        userName() {
+            return this.$store.state.user.userObj?.accessToken?.payload?.username ?? "ERROR"
+        }
+    },
+    data() {
       return {
-          sidebarExpanded: true
+          sidebarExpanded: true,
       }
    
   }
@@ -44,6 +55,7 @@ export default {
 
 <style lang="scss">
 .sidebar {
+    position: relative;
     background: #fff;
     height: 100vh;
     box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
@@ -69,6 +81,13 @@ export default {
         vertical-align: middle;
     }
 
+    .sidebarBottom {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+
+    }
 }
 
 
