@@ -53,6 +53,14 @@ export default {
     proxy: true, // Can be also an object with default options
   },
 
+  vuetify: {
+    customVariables: ["~/assets/css/vuetify.scss"],
+    treeShake: true,
+    options: {
+      customProperties: true,
+    },
+  },
+
   proxy: {
     "/api/": {
       target: "http://localhost:8080/",

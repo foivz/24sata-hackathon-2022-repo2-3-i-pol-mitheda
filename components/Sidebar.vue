@@ -1,11 +1,15 @@
-<!-- sidebar -->
 <template>
-    <aside class="flex-initial flex-col justify-between" :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
-        <div>
-            <v-icon class="openSidebar" @click="sidebarExpanded = !sidebarExpanded">mdi-menu</v-icon>
-        </div>
-         <v-list-item v-show="sidebarExpanded">
-          <v-list-item-content>
+    <v-card>
+        <v-navigation-drawer
+          permanent
+          expand-on-hover
+        >
+
+        <v-list-item class="px-2">
+            <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
             <v-list-item-title class="text-h6">
               {{$nuxt.$route.name}}
             </v-list-item-title>
@@ -17,7 +21,6 @@
   
         <v-divider></v-divider>
         <v-list
-            class="mt-8"
           dense
           nav
         >
@@ -29,15 +32,30 @@
            <NuxtLink :to="item.route" class="flex w-full">
                 <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-item-icon>
+                </v-list-item-icon>
         
-                    <v-list-item-content>
+                <v-list-item-content>
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
             </NuxtLink>
           </v-list-item>
         </v-list>
-    </aside>
+
+        <template v-slot:append>
+            <v-list
+            dense
+            nav
+        >
+          <v-list-item
+          >
+                <v-list-item-content>
+                    <v-list-item-title>Logout</v-list-item-title>
+                </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        </template>
+        </v-navigation-drawer>
+    </v-card>
 </template>
 
 <script>

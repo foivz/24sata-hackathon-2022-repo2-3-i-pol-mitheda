@@ -1,7 +1,8 @@
 <template>
   <v-app class="wrapper">
       <amplify-authenticator>
-        <div class="flex bg-gray-100">
+        <div class="flex bg-gray-100 relative min-h-screen">
+          <div class="bg-green-400 absolute w-full h-64" />
           <Sidebar />
           <Nuxt />
         </div>
