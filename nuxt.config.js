@@ -15,14 +15,13 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [{ src: "@/assets/css/style.scss" }],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/amplify.js', mode: 'client' },
-    { src: '~/plugins/vuetify.js', mode: 'client' }
+    { src: "~/plugins/amplify.js", mode: "client" },
+    { src: "~/plugins/vuetify.js", mode: "client" },
   ],
-
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,9 +32,8 @@ export default {
     "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
-    '@nuxtjs/vuetify',
-    '@nuxtjs/google-fonts'
-    
+    "@nuxtjs/vuetify",
+    "@nuxtjs/google-fonts",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -46,16 +44,15 @@ export default {
 
   googleFonts: {
     families: {
-  
       // a name with spaces
-      'Open+Sans': true,
-    }
+      "Open+Sans": true,
+    },
   },
   proxy: {
     // Simple proxy
     "/api/": {
       target: "http://localhost:8080/",
-      pathRewrite: { "^/api/": "" }
-    }
+      pathRewrite: { "^/api/": "" },
+    },
   },
 };
