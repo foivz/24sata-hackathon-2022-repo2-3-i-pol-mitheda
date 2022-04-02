@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <Tutorial />
-  </div>
+  <amplify-authenticator>
+    <div>
+      <!-- tu ide dash -->
+      <amplify-sign-out></amplify-sign-out>
+    </div>
+  </amplify-authenticator>
 </template>
 
 <script>
 export default {
 }
 </script>
-
-<style>
-</style>
