@@ -4,11 +4,6 @@
       <div class="flex bg-gray-100">
         <Sidebar />
         <Nuxt />
-        <amplify-chatbot
-          bot-name="24bot"
-          bot-title="My ChatBot"
-          welcome-message="Hello, how can I help you?"
-        />
       </div>
     </amplify-authenticator>
   </v-app>
