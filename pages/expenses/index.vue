@@ -39,19 +39,6 @@
             class="mx-4"
           ></v-text-field>
         </template>
-        <template v-slot:body.append>
-          <tr>
-            <td></td>
-            <td>
-              <v-text-field
-                v-model="calories"
-                type="number"
-                label="Less than"
-              ></v-text-field>
-            </td>
-            <td colspan="4"></td>
-          </tr>
-        </template>
       </v-data-table>
       <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
