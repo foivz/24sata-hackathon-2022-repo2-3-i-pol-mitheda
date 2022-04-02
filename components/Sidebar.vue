@@ -3,31 +3,41 @@
     <aside class="flex-initial flex-col justify-between" :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
         <div>
             <v-icon class="openSidebar" @click="sidebarExpanded = !sidebarExpanded">mdi-menu</v-icon>
-            <NuxtLink to="/" class="sidebar-btn">
-                <span class="sidebarIco">
-                    <v-icon color="#5b9fd1">mdi-home</v-icon>
-                </span>
-                <span class="sidebar-text">Dashboard</span>
-            </NuxtLink>
-            <NuxtLink to="/expenses" class="sidebar-btn">
-                <span class="sidebarIco">
-                    <v-icon color="#26870f">mdi-cash</v-icon>
-                </span>
-                <span class="sidebar-text">Expenses</span>
-            </NuxtLink>
         </div>
-
-        <NuxtLink to="/user" class="sidebar-btn">
-            <div class="flex items-center">
-                <span class="sidebarIco">
-                    <v-icon color="#26870f">mdi-account</v-icon>
-                </span>
-                <div class="flex flex-col">
-                    <p class="sidebar-text" style="margin-bottom: 0px">3 i pol luzera</p>
-                    <p class="sidebar-text" style="margin-bottom: 0px">logout</p>
-                </div>
-            </div>
-        </NuxtLink>
+         <v-list-item v-show="sidebarExpanded">
+          <v-list-item-content>
+            <v-list-item-title class="text-h6">
+              {{$nuxt.$route.name}}
+            </v-list-item-title>
+            <!-- <v-list-item-subtitle>
+              Logged in as: {{$store.state.user}}
+            </v-list-item-subtitle> -->
+          </v-list-item-content>
+        </v-list-item>
+  
+        <v-divider></v-divider>
+        <v-list
+            class="mt-8"
+          dense
+          nav
+        >
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+          >
+           <NuxtLink :to="item.route" class="flex w-full">
+                <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+        
+                    <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+            </NuxtLink>
+            
+          </v-list-item>
+        </v-list>
     </aside>
 </template>
 
@@ -35,7 +45,12 @@
 export default {
   data() {
       return {
-          sidebarExpanded: true
+          sidebarExpanded: true,
+          items: [
+            { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
+            { title: 'Expenses', icon: 'mdi-image', route: '/expenses' },
+            { title: 'Settings', icon: 'mdi-account', route: '/user' },
+        ],
       }
    
   }
