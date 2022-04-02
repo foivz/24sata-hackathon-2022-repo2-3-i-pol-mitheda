@@ -1,6 +1,5 @@
 <template>
   <v-app class="wrapper">
-    
       <amplify-authenticator>
         <div class="flex bg-gray-100">
           <Sidebar />

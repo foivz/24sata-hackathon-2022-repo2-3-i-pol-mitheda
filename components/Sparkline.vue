@@ -1,7 +1,7 @@
 <template>
   <v-sparkline
       :value="value"
-      :gradient="gradient"
+      :gradient="selectedGradient"
       :smooth="radius || false"
       :padding="padding"
       :line-width="width"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-initial">
+  <div class="flex">
     <Dashboard />
   </div>
 </template>
