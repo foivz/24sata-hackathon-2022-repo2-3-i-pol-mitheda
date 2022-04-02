@@ -19,8 +19,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/amplify.js', ssr: 'false' },
-    { src: '~/plugins/vuetify.js', ssr: 'false' }
+    { src: '~/plugins/amplify.js', mode: 'client' },
+    { src: '~/plugins/vuetify.js', mode: 'client' }
   ],
 
 
@@ -50,5 +50,12 @@ export default {
       // a name with spaces
       'Open+Sans': true,
     }
-  }
+  },
+  proxy: {
+    // Simple proxy
+    "/api/": {
+      target: "http://localhost:8080/",
+      pathRewrite: { "^/api/": "" }
+    }
+  },
 };
