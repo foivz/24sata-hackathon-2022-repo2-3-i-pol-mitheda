@@ -1,19 +1,35 @@
 <template>
-  <div class="h-full w-full m-8 grid grid-cols-8 z-50">
-    <div class="col-span-8">
-     <v-data-table
-        :headers="headers"
+  <div class="h-full w-full m-8 z-50">
+    <div class="m-8 flex items-center">
+      <p
+        class="font-extrabold text-2xl mr-4 text-white"
+        style="margin-bottom: 0px"
+      >
+        All Expenses
+      </p>
+      <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
+    </div>
+    <div>
+      <v-data-table
+        :headers="tableHeaders"
         :items="expenses"
+        v-model="selectedExpenses"
         item-key="id"
         class="elevation-1 cursor-pointer"
         :search="search"
         :custom-filter="filterOnlyCapsText"
+        show-select
         show-expand
-         @click:row="(item, slot) => slot.expand(!slot.isExpanded)"
+        @click:row="(item, slot) => slot.expand(!slot.isExpanded)"
       >
-        <template v-slot:expanded-item="{item, headers}">
+        <template v-slot:expanded-item="{ item, headers }">
           <td :colspan="headers.length" style="padding: 0px">
-            <p>{{item}}</p>
+            <v-data-table
+              hide-default-footer
+              :headers="tableExpansionHeaders"
+              :items="item.expense_item"
+              class="elevation-1 w-full"
+            ></v-data-table>
           </td>
         </template>
         <template v-slot:top>
@@ -23,33 +39,11 @@
             class="mx-4"
           ></v-text-field>
         </template>
-        <template v-slot:body.append>
-          <tr>
-            <td></td>
-            <td>
-              <v-text-field
-                v-model="calories"
-                type="number"
-                label="Less than"
-              ></v-text-field>
-            </td>
-            <td colspan="4"></td>
-          </tr>
-        </template>
       </v-data-table>
       <v-row justify="center">
-        <v-dialog
-          v-model="dialog"
-          persistent
-          max-width="600px"
-        >
+        <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
+            <v-btn color="primary" dark v-bind="attrs" v-on="on">
               Open Dialog
             </v-btn>
           </template>
@@ -60,72 +54,45 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Title"
                       required
                       v-model="newExpense.title"
                     ></v-text-field>
                   </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Merchant"
                       v-model="newExpense.merchant"
                     ></v-text-field>
                   </v-col>
-                  
                 </v-row>
                 <p v-if="newExpense.expense_items.length > 0">Items</p>
                 <v-row v-for="item in newExpense.expense_items" :key="item.id">
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Title"
                       required
                       v-model="item.title"
                     ></v-text-field>
                   </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Amount"
                       v-model="item.amount"
                     ></v-text-field>
                   </v-col>
 
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Price"
                       v-model="item.price"
                     ></v-text-field>
                   </v-col>
-
-                  
                 </v-row>
                 <v-row>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="addNewItem"
-                  >
+                  <v-btn color="blue darken-1" text @click="addNewItem">
                     New item
                   </v-btn>
                 </v-row>
@@ -134,18 +101,10 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="dialog = false"
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">
                 Close
               </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="dialog = false"
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">
                 Save
               </v-btn>
             </v-card-actions>
@@ -153,77 +112,100 @@
         </v-dialog>
       </v-row>
     </div>
-    
+    <div class="grid grid-cols-6 gap-8 m-8">
+      <v-btn depressed color="primary" :disabled="selectedExpenses.length == 0">
+        Update
+      </v-btn>
+      <v-btn depressed color="error" :disabled="selectedExpenses.length == 0">
+        Delete
+      </v-btn>
+    </div>
   </div>
-
-  
 </template>
 
 <script>
+import dayjs from "dayjs";
 export default {
-  data () {
+  data() {
     return {
-      search: '',
-      calories: '',
+      search: "",
       expenses: [],
+      selectedExpenses: [],
       dialog: false,
       newExpense: {
         newId: 0,
         title: "",
         merchant: "",
-        expense_items: []
-      }
-    }
+        expense_items: [],
+      },
+    };
   },
   async mounted() {
     this.$nextTick(async () => {
-      console.log("TOKEN:"+this.$store.state.user.token)
-      console.log()
-      const expensesx = await this.$axios.$get('/api/expenses/', {
+      const expensesx = await this.$axios.$get("/api/expenses", {
         params: {
-          token: this.$store.state.user.token
-        }
-      })
-      this.expenses = expensesx
-    })
+          token: this.$store.state.user.token,
+        },
+      });
+      this.expenses = expensesx.map((el) => {
+        el.date = this.formatDate(el.date);
+        el.created_at = this.formatDate(el.created_at);
+        return el;
+      });
+    });
   },
   computed: {
-    headers () {
+    tableHeaders() {
       return [
         {
-          text: 'title',
-          align: 'start',
+          text: "Merchant",
+          value: "merchant",
+          align: "start",
           sortable: false,
-          value: 'title',
         },
         {
-          text: 'date',
-          value: 'date',
-          filter: value => {
-            if (!this.date) return true
-
-            return value < this.calories
-          },
+          text: "Title",
+          value: "title",
         },
-        { text: 'merchant', value: 'merchant' },
-        { text: 'createdat', value: 'created_at' },
-      ]
+        {
+          text: "Date",
+          value: "date",
+        },
+        { text: "Created At", value: "created_at" },
+      ];
+    },
+    tableExpansionHeaders() {
+      return [
+        {
+          text: "Title",
+          align: "start",
+          sortable: false,
+          value: "title",
+        },
+        {
+          text: "Price",
+          value: "price",
+        },
+        { text: "Amount", value: "amount" },
+        { text: "Expense ID", value: "expense_id" },
+      ];
     },
   },
   methods: {
-    filterOnlyCapsText (value, search, item) {
-      return value != null &&
+    filterOnlyCapsText(value, search, item) {
+      return (
+        value != null &&
         search != null &&
-        typeof value === 'string' &&
+        typeof value === "string" &&
         value.toString().toLocaleUpperCase().indexOf(search) !== -1
+      );
+    },
+    formatDate(date) {
+      return dayjs(date).format("DD/MM/YYYY");
     },
     addNewItem() {
-      this.newExpense.expense_items.push({title: "", amount: "", price: ""})
-    }
+      this.newExpense.expense_items.push({ title: "", amount: "", price: "" });
+    },
   },
-}
+};
 </script>
-
-<style>
-
-</style>
