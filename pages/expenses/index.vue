@@ -53,6 +53,77 @@
           </tr>
         </template>
       </v-data-table>
+      <v-row justify="center">
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark v-bind="attrs" v-on="on">
+              Open Dialog
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">User Profile</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Title"
+                      required
+                      v-model="newExpense.title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Merchant"
+                      v-model="newExpense.merchant"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <p v-if="newExpense.expense_items.length > 0">Items</p>
+                <v-row v-for="item in newExpense.expense_items" :key="item.id">
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Title"
+                      required
+                      v-model="item.title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Amount"
+                      v-model="item.amount"
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Price"
+                      v-model="item.price"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-btn color="blue darken-1" text @click="addNewItem">
+                    New item
+                  </v-btn>
+                </v-row>
+              </v-container>
+              <small>*indicates required field</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Close
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
     </div>
     <div class="grid grid-cols-6 gap-8 m-8">
       <v-btn depressed color="primary" :disabled="selectedExpenses.length == 0">
@@ -74,6 +145,13 @@ export default {
       calories: "",
       expenses: [],
       selectedExpenses: [],
+      dialog: false,
+      newExpense: {
+        newId: 0,
+        title: "",
+        merchant: "",
+        expense_items: [],
+      },
     };
   },
   async mounted() {
@@ -140,6 +218,9 @@ export default {
     },
     formatDate(date) {
       return dayjs(date).format("DD/MM/YYYY");
+    },
+    addNewItem() {
+      this.newExpense.expense_items.push({ title: "", amount: "", price: "" });
     },
   },
 };
