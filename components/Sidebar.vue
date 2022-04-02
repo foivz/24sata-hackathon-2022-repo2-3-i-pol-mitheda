@@ -8,6 +8,7 @@
             </span>
             <span class="sidebar-text">Dashboard</span>
         </NuxtLink>
+        <a href="/expenses">Expenses test</a>
         <NuxtLink to="/expenses" class="sidebar-btn">
             <span class="sidebarIco">
                 <v-icon color="#26870f">mdi-cash</v-icon>
