@@ -1,9 +1,10 @@
 <template>
-    <div>
+    <div class="flex">
         <!-- sidebar -->
         <aside class="w-64 bg-blue-500 h-screen" aria-label="Sidebar">
             poyy
         </aside>
+        <DoughnutChart />
     </div>
 </template>
 
