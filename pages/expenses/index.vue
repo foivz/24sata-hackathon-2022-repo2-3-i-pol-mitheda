@@ -3,11 +3,11 @@
     <div class="col-span-8">
      <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="expenses"
         item-key="name"
         class="elevation-1"
         :search="search"
-        :custom-filter="[filterOnlyCapsText]"
+        :custom-filter="filterOnlyCapsText"
       >
         <template v-slot:top>
           <v-text-field
@@ -132,24 +132,23 @@ export default {
     headers () {
       return [
         {
-          text: 'Dessert (100g serving)',
+          text: 'title',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'title',
         },
         {
-          text: 'Calories',
-          value: 'calories',
+          text: 'date',
+          value: 'date',
           filter: value => {
-            if (!this.calories) return true
+            if (!this.date) return true
 
-            return value < parseInt(this.calories)
+            return value < this.calories
           },
         },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Iron (%)', value: 'iron' },
+        { text: 'merchant', value: 'merchant' },
+        { text: 'createdat', value: 'created_at' },
+        
       ]
     },
   },

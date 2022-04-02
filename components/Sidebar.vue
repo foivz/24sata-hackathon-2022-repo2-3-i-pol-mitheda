@@ -9,9 +9,9 @@
             <v-list-item-title class="text-h6">
               {{$nuxt.$route.name}}
             </v-list-item-title>
-            <!-- <v-list-item-subtitle>
-              Logged in as: {{$store.state.user}}
-            </v-list-item-subtitle> -->
+            <v-list-item-subtitle>
+              Logged in as: {{userName}}
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
   
@@ -35,7 +35,6 @@
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
             </NuxtLink>
-            
           </v-list-item>
         </v-list>
     </aside>
