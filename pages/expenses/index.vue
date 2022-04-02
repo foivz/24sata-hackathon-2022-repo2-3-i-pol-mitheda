@@ -4,11 +4,18 @@
      <v-data-table
         :headers="headers"
         :items="expenses"
-        item-key="name"
-        class="elevation-1"
+        item-key="id"
+        class="elevation-1 cursor-pointer"
         :search="search"
         :custom-filter="filterOnlyCapsText"
+        show-expand
+         @click:row="(item, slot) => slot.expand(!slot.isExpanded)"
       >
+        <template v-slot:expanded-item="{item, headers}">
+          <td :colspan="headers.length" style="padding: 0px">
+            <p>{{item}}</p>
+          </td>
+        </template>
         <template v-slot:top>
           <v-text-field
             v-model="search"
@@ -75,7 +82,6 @@ export default {
         },
         { text: 'merchant', value: 'merchant' },
         { text: 'createdat', value: 'created_at' },
-        
       ]
     },
   },
