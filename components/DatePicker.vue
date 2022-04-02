@@ -23,7 +23,7 @@
 
       <v-date-picker
           v-model="date_value"
-          color="#000000"
+          no-title
           scrollable 
           range>
 
