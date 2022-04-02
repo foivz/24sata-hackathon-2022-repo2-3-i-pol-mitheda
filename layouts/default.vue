@@ -1,5 +1,11 @@
 <template>
   <v-app class="wrapper">
+    
+      <amplify-authenticator>
+        <div class="flex">
+        <Sidebar />
         <Nuxt />
-    </v-app>
+        </div>
+      </amplify-authenticator>
+  </v-app>
 </template>

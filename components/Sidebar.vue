@@ -1,6 +1,6 @@
 <!-- sidebar -->
 <template>
-    <aside class="flex flex-col justify-between" :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
+    <aside class="flex-initial flex-col justify-between" :class="{sidebar: true, expanded: sidebarExpanded}" aria-label="Sidebar">
         <div>
             <v-icon class="openSidebar" @click="sidebarExpanded = !sidebarExpanded">mdi-menu</v-icon>
             <NuxtLink to="/" class="sidebar-btn">
