@@ -1,7 +1,8 @@
 <template>
   <amplify-authenticator>
     <div>
-      <div class="relative">
+      <div class="flex">
+        <Sidebar />
         <Dashboard />
       </div>
       <amplify-sign-out></amplify-sign-out>
