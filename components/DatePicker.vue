@@ -8,7 +8,8 @@
         width="290px">
 
       <template v-slot:activator="{ on, attrs }">
-        <div class="input-container">
+        <div class="relative flex">
+          <v-icon color="#5b9fd1" class="absolute">mdi-calendar-range</v-icon>
           <input
               class="w-full"
               type="text"
