@@ -1,6 +1,8 @@
 <template>
-    <div class="h-full w-full m-4 p-4 rounded-3xl grid grid-cols-4 gap-4 bg-gray-200">
-        <DoughnutChart />
+    <div class="h-full w-full m-4 p-4 grid grid-cols-6 gap-4">
+        <DashBoardWrapper class="col-span-3">
+            <DoughnutChart />
+        </DashBoardWrapper>
     </div>
 </template>
 
