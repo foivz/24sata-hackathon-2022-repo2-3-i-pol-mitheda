@@ -9,13 +9,13 @@
 
       <template v-slot:activator="{ on, attrs }">
         <div class="relative flex">
-          <v-icon color="#5b9fd1" class="absolute">mdi-calendar-range</v-icon>
+          <v-icon color="#5b9fd1" class="absolute mr-2">mdi-calendar-range</v-icon>
           <input
-              class="w-full"
+              class="w-full appearance-none focus:outline-none focus:shadow-outline"
               type="text"
-              placeholder="Date"
+              placeholder="Choose date"
               readonly
-              v-model="date_value"
+              v-model="getShowDate"
               v-bind="attrs"
               v-on="on">
         </div>
@@ -61,6 +61,15 @@ export default {
     return {
       date_modal: null,
       date_value: null,
+    }
+  },
+
+  computed:{
+    getShowDate(){
+      if(Array.isArray(this.date_value) && this.date_value.length == 2){
+        return this.date_value[0] + '-' + this.date_value[1] 
+      }
+      return this.date_value
     }
   }
 }
