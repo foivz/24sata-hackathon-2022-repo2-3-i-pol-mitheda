@@ -10,6 +10,7 @@
       <template v-slot:activator="{ on, attrs }">
         <div class="input-container">
           <input
+              class="w-full"
               type="text"
               placeholder="Date"
               readonly

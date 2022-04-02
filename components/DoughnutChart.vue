@@ -1,5 +1,5 @@
 <template>
-    <div class="col-span-3">
+    <div>
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 </template>
