@@ -58,7 +58,7 @@ export default {
   }
   .bot-float {
     position: fixed;
-    right: 0;
+    right: 10px;
     bottom: 0;
     display: inline-block;
     z-index: 60;
