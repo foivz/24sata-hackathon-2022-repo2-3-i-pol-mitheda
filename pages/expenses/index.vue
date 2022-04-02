@@ -179,7 +179,7 @@ export default {
     this.$nextTick(async () => {
       console.log("TOKEN:"+this.$store.state.user.token)
       console.log()
-      const expensesx = await this.$axios.$get('/api/expenses', {
+      const expensesx = await this.$axios.$get('/api/expenses/', {
         params: {
           token: this.$store.state.user.token
         }
