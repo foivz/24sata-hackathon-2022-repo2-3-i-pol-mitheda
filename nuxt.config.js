@@ -20,7 +20,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/amplify.js', ssr: 'false' }
+    { src: '~/plugins/amplify.js', ssr: 'false' },
+    { src: '~/plugins/vuetify.js', ssr: 'false' }
   ],
 
 
@@ -33,6 +34,9 @@ export default {
     "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
+    '@nuxtjs/vuetify',
+    '@nuxtjs/google-fonts'
+    
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -40,4 +44,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  googleFonts: {
+    families: {
+  
+      // a name with spaces
+      'Open+Sans': true,
+    }
+  }
 };
