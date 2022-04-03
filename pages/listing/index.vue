@@ -27,7 +27,6 @@
             <v-text-field
               v-model="name"
               :counter="10"
-              :rules="nameRules"
               label="Name"
               outlined
               required
@@ -51,7 +50,7 @@
             ></v-text-field>
 
             <v-text-field
-              v-model="address"
+              v-model="weburl"
               :rules="descriptionRules"
               label="Website URL"
               outlined
@@ -105,13 +104,11 @@ export default {
   data: () => ({
     valid: true,
     name: "",
-    nameRules: [
-      (v) => !!v || "Name is required",
-      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
-    ],
+
     description: "",
     descriptionRules: [(v) => !!v || "Description is required"],
     address: "",
+    weburl: "",
     freeDelivery: false,
     paymentInfo: "Payment from blekso",
     nekiBrojIdkLol: "123123",
