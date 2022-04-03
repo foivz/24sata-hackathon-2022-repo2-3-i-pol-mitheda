@@ -5,7 +5,7 @@
         class="font-extrabold text-2xl mr-4 text-white"
         style="margin-bottom: 0px"
       >
-        All Expenses
+        All Shopping Lists
       </p>
       <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
     </div>
@@ -49,7 +49,7 @@
           <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn depressed color="primary" dark v-bind="attrs" v-on="on">
-                Add expense
+                Add Shopping List
               </v-btn>
             </template>
             <v-card>
