@@ -48,7 +48,8 @@ export default {
   watch: {
     date_value: {
       handler(value) {
-        this.$emit("input", value);
+        if (value.length == 2)
+          this.$emit("input", value);
       },
     },
   },
@@ -60,7 +61,7 @@ export default {
   data() {
     return {
       date_modal: null,
-      date_value: ["2022-04-03"],
+      date_value: ["2022-04-01", "2022-04-03"],
     };
   },
 
