@@ -55,7 +55,11 @@
           </v-card-title>
 
           <v-card-text>
-            <v-chip v-for="(r, index) in recommendations" :key="index" @click="addNewItem(r.itemId)">
+            <v-chip
+              v-for="(r, index) in recommendations"
+              :key="index"
+              @click="addNewItem(r.itemId)"
+            >
               {{ r.itemId }}
               <v-icon>mdi-plus</v-icon>
             </v-chip>
@@ -85,27 +89,35 @@
                 </v-col>
               </v-row>
               <p v-if="newExpense.expense_items.length > 0">Items</p>
-              <v-row v-for="item in newExpense.expense_items" :key="item.id">
-                <v-col cols="12" sm="6" md="4">
+              <v-row
+                v-for="(item, index) in newExpense.expense_items"
+                :key="index"
+              >
+                <v-col cols="12" sm="6" md="5">
                   <v-text-field
                     label="Title"
                     required
                     v-model="item.title"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="3">
                   <v-text-field
                     label="Amount"
                     v-model="item.amount"
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="3">
                   <v-text-field
                     label="Price"
                     v-model="item.price"
                   ></v-text-field>
                 </v-col>
+                <div class="flex justify-center items-center">
+                  <v-icon @click="deleteItem(index)" class="cursor-pointer"
+                    >mdi-delete</v-icon
+                  >
+                </div>
               </v-row>
               <v-row>
                 <v-btn color="blue darken-1" text @click="addNewItem">
@@ -243,10 +255,19 @@ export default {
       return dayjs(date).format("DD/MM/YYYY");
     },
     addNewItem(title) {
-      this.newExpense.expense_items.push({ title: title && typeof title === "string" || "", amount: "", price: "" });
+      this.newExpense.expense_items.push({
+        title: (title && typeof title === "string") || "",
+        amount: "",
+        price: "",
+      });
       if (title && typeof title === "string") {
-        this.recommendations = this.recommendations.filter(r => r.itemId != title)
+        this.recommendations = this.recommendations.filter(
+          (r) => r.itemId != title
+        );
       }
+    },
+    deleteItem(index) {
+      this.newExpense.expense_items.splice(index, 1);
     },
     async upload(event) {
       event.preventDefault();
