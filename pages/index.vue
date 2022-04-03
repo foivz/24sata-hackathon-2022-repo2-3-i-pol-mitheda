@@ -99,7 +99,7 @@ export default {
       expenses: [],
       checking: false,
       dates: [],
-      sparklineNumbers: [],
+      sparklineNumbers: {},
     };
   },
   methods: {
@@ -113,8 +113,11 @@ export default {
         el.expense_item.forEach((ex_el) => {
           breakdown[el.category] += ex_el.price * ex_el.amount;
         });
+        if (breakdown[el.category] === 0) {
+          delete breakdown[el.category]
+        }
       });
-      this.sparklineNumbers = numbers;
+      this.sparklineNumbers = breakdown;
     },
     isDateBetween(date) {
       if (this.selectedDate.length == 1) {
