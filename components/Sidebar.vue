@@ -17,7 +17,7 @@
 
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item class="my-2" v-for="item in items" :key="item.title" link>
           <NuxtLink :to="item.route" class="flex w-full">
             <v-list-item-icon>
               <v-icon :color="item.color">{{ item.icon }}</v-icon>
