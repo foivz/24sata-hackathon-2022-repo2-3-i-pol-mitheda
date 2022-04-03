@@ -8,7 +8,7 @@
         >
           Add listing
         </p>
-        <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
+        <v-icon color="#ffffff" class="absolute">mdi-paperclip</v-icon>
       </div>
       <div class="grid gap-4">
         <v-card elevation="2" class="p-8">
