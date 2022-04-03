@@ -25,7 +25,11 @@
       :class="{ 'grid-cols-8': gridView, 'grid-cols-1': !gridView }"
     >
       <v-card elevation="2" class="col-span-3">
-        <DoughnutChart class="bg-white rounded-lg m-4" :total="total" />
+        <DoughnutChart
+          class="bg-white rounded-lg m-4"
+          :total="total"
+          :numbers="sparklineNumbers"
+        />
       </v-card>
       <v-card
         v-show="sparklineNumbers.length > 0"
