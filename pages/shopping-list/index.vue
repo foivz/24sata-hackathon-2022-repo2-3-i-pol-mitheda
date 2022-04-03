@@ -289,7 +289,7 @@ export default {
     },
     addNewItem(title) {
       this.newExpense.expense_items.push({
-        title: (title && typeof title === "string") || "",
+        title: (title && typeof title === "string") ? title: "",
         amount: "",
         price: "",
       });
