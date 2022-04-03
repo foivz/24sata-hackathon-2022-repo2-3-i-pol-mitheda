@@ -58,37 +58,18 @@ export default {
       );
     },
   },
-  data() {
-    return {
-      sidebarExpanded: true,
-      items: [
-        {
-          title: "Dashboard",
-          icon: "mdi-view-dashboard",
-          route: "/",
-          color: "green darken-2",
-        },
-        {
-          title: "Expenses",
-          icon: "mdi-image",
-          route: "/expenses",
-          color: "red darken-2",
-        },
-        {
-          title: "Account",
-          icon: "mdi-account",
-          route: "/user",
-          color: "blue darken-2",
-        },
-        {
-          title: "Listing",
-          icon: "mdi-paperclip",
-          route: "/listing",
-          color: "purple darken-2",
-        },
-      ],
-    };
-  },
+    data() {
+        return {
+            sidebarExpanded: true,
+            items: [
+            { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color:"green darken-2" },
+            { title: 'Expenses', icon: 'mdi-image', route: '/expenses', color:"red darken-2" },
+            { title: 'Shopping List', icon: 'mdi-playlist-edit', route: '/shopping-list', color:"red darken-2" },
+            { title: 'Account', icon: 'mdi-account', route: '/user', color:"blue darken-2" },
+        ],
+    }
+   
+  }
 };
 </script>
 
