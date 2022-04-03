@@ -30,57 +30,15 @@
           :numbers="sparklineNumbers"
         />
       </v-card>
-      <!-- <v-card
-        v-show="sparklineNumbers.length > 0"
+      <v-card
         elevation="2"
         class="col-span-5 p-8"
       >
-        <v-card-title>
-          <v-icon
-            :color="checking ? 'red lighten-2' : 'indigo'"
-            class="mr-12"
-            size="64"
-          >
-            mdi-currency-usd
-          </v-icon>
-          <v-row align="start">
-            <div class="text-caption grey--text text-uppercase">
-              Total expense
-            </div>
-            <div>
-              <span
-                v-if="total"
-                class="text-h3 font-weight-black"
-                v-text="total"
-              ></span>
-            </div>
-          </v-row>
-
-          <v-spacer></v-spacer>
-
-          <v-btn icon class="align-self-start" size="28">
-            <v-icon>mdi-arrow-right-thick</v-icon>
-          </v-btn>
-        </v-card-title>
-
-        <v-sheet color="transparent">
-          <v-sparkline
-            :smooth="16"
-            :gradient="['#f72047', '#ffd200', '#1feaea']"
-            :line-width="3"
-            :value="sparklineNumbers"
-            auto-draw
-            stroke-linecap="round"
-          >
-            <template v-slot:label="item"> ${{ item.value }} </template>
-          </v-sparkline>
-        </v-sheet>
-        <div class="flex justify-center items-center w-full h-32">
-          <div class="text-h4 font-weight-thin">
-            Expenses {{ selectedDate }}
-          </div>
-        </div>
-      </v-card> -->
+        <LineChart
+          class="bg-white rounded-lg m-4"
+          :data="expenses"
+        />
+      </v-card>
     </div>
   </div>
 </template>
