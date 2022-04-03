@@ -61,4 +61,7 @@ export default {
       pathRewrite: { "^/api/": "" },
     },
   },
+  server: {
+    host: '0' // default: localhost
+  }
 };

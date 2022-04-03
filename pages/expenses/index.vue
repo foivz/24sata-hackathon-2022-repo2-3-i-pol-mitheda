@@ -67,8 +67,12 @@
               Pre-fill from invoice
             </v-btn>
           </v-card-title>
+          
           <v-card-text>
             <v-container>
+              <canvas ref="qrcanvas" v-show="qrGenerated"></canvas>
+              <v-btn color="blue darken-1" text @click="generateQr()">Generate QR</v-btn>
+              
               <v-row>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field
@@ -148,10 +152,12 @@
 </template>
 
 <script>
+import QRCode from 'qrcode'
 import dayjs from "dayjs";
 export default {
   data() {
     return {
+      qrGenerated: false,
       search: "",
       expenses: [],
       selectedExpenses: [],
@@ -167,6 +173,14 @@ export default {
   },
   async mounted() {
     this.$nextTick(async () => {
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+     
+      let mobscan = params.mobilescan; 
+      if(mobscan) {
+        this.dialog = true
+      }
       const expensesx = await this.$axios.$get("/api/expenses/user", {
         params: {
           token: this.$store.state.user.token,
@@ -229,6 +243,13 @@ export default {
     },
   },
   methods: {
+    generateQr() {
+      QRCode.toCanvas(this.$refs.qrcanvas, window.location.href+"?mobilescan=1", (error) => {
+        if (error) console.error(error)
+        console.log('success!');
+        this.qrGenerated = true
+      })
+    },
     filterOnlyCapsText(value, search, item) {
       return (
         value != null &&
@@ -272,6 +293,7 @@ export default {
       console.log(response);
     },
   },
+  
 };
 </script>
 

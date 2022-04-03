@@ -44,6 +44,8 @@ export default {
     };
   },
   async mounted() {
+
+
     const userObj = sessionStorage.getItem("userObj");
     if (!userObj) {
       var resultData = await Auth.currentSession();

@@ -54,6 +54,13 @@
             <span class="text-h5">Add Shopping List</span>
           </v-card-title>
 
+        <v-chip
+            class="ma-2"
+            color="primary"
+            >
+            Primary
+        </v-chip>
+
           <v-card-title>
             <form @change="upload">
               <input
