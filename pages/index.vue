@@ -11,10 +11,7 @@
       <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
     </div>
 
-    <div
-      class="m-8 grid gap-8"
-      :class="{ 'grid-cols-8': gridView, 'grid-cols-1': !gridView }"
-    >
+    <div class="m-8 grid md:grid-cols-2 lg:grid-cols-8 gap-8">
       <v-card elevation="2" class="col-span-3">
         <div
           class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
@@ -93,7 +90,6 @@ export default {
     return {
       selectedDate: [],
       showMenu: false,
-      gridView: true,
       expenses: [],
       checking: false,
       dates: [],

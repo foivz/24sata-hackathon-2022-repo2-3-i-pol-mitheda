@@ -30,70 +30,60 @@
         </v-list-item>
       </v-list>
 
-      <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-      <template v-slot:activator="{ on, attrs }">
+      <v-divider></v-divider>
 
-        <v-list dense nav>
+      <v-dialog v-model="dialog" persistent max-width="600px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-list dense nav>
             <v-list-item link v-bind="attrs" v-on="on">
-                <v-list-item-icon>
-                    <v-icon>mdi-logout</v-icon>
-                </v-list-item-icon>
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
 
-                <v-list-item-content>
-                    <v-list-item-title>Collaborate</v-list-item-title>
-                </v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>Collaborate</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
-        </v-list>
+          </v-list>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Enter username to add</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    label="Username*"
+                    required
+                    v-model="usernameAdd"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+            <small>*indicates required field</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="dialog = false">
+              Close
+            </v-btn>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="
+                dialog = false;
+                addUser();
+              "
+            >
+              Add
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="text-h5">Enter username to add</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Username*"
-                  required
-                  v-model="usernameAdd"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false; addUser()"
-          >
-            Add
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-
+      <v-divider></v-divider>
 
       <template v-slot:append>
         <NuxtLink to="/logout">
@@ -157,13 +147,13 @@ export default {
     };
   },
   methods: {
-      async addUser() {
-          await this.$axios.post("/api/accounts/set-account", {
-              token: this.$store.state.user.token,
-              username: this.usernameAdd
-          })
-      }
-  }
+    async addUser() {
+      await this.$axios.post("/api/accounts/set-account", {
+        token: this.$store.state.user.token,
+        username: this.usernameAdd,
+      });
+    },
+  },
 };
 </script>
 
