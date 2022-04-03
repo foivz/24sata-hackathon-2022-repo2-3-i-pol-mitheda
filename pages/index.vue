@@ -27,7 +27,11 @@
       <v-card elevation="2" class="col-span-3">
         <DoughnutChart class="bg-white rounded-lg m-4" />
       </v-card>
-      <v-card v-show="expenses.length > 0" elevation="2" class="col-span-5 p-8">
+      <v-card
+        v-show="sparklineNumbers.length > 0"
+        elevation="2"
+        class="col-span-5 p-8"
+      >
         <v-card-title>
           <v-icon
             :color="checking ? 'red lighten-2' : 'indigo'"
@@ -41,7 +45,11 @@
               Total expense
             </div>
             <div>
-              <span class="text-h3 font-weight-black" v-text="avg"></span>
+              <span
+                v-if="avg"
+                class="text-h3 font-weight-black"
+                v-text="avg"
+              ></span>
               <!-- <strong v-if="avg">BPM</strong> -->
             </div>
           </v-row>
@@ -66,7 +74,9 @@
           </v-sparkline>
         </v-sheet>
         <div class="flex justify-center items-center w-full h-32">
-          <div class="text-h4 font-weight-thin">Expenses Last 7 days</div>
+          <div class="text-h4 font-weight-thin">
+            Expenses {{ selectedDate }}
+          </div>
         </div>
       </v-card>
     </div>
@@ -75,31 +85,83 @@
 
 <script>
 import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
+
 export default {
   data() {
     return {
-      selectedDate: null,
+      selectedDate: [],
       showMenu: false,
       gridView: true,
       expenses: [],
       checking: false,
+      dates: [],
+      sparklineNumbers: [],
     };
   },
   methods: {
     formatDate(date) {
       return dayjs(date).format("YYYY-MM-DD");
     },
+    getSparklineNumbers() {
+      let numbers = [];
+      let sum;
+      this.dates.forEach((el) => {
+        sum = 0;
+        el.expense_item.forEach((ex_el) => {
+          sum += ex_el.price;
+        });
+        numbers.push(sum);
+      });
+      this.sparklineNumbers = numbers;
+    },
+    isDateBetween(date) {
+      if (this.selectedDate.length == 1) {
+        return date == this.selectedDate;
+      } else {
+        return dayjs(date).isBetween(
+          this.selectedDate[0],
+          this.selectedDate[1],
+          null,
+          "[)"
+        );
+      }
+    },
   },
   computed: {
-    sparklineNumbers() {
-      return this.expenses.length > 0
-        ? this.expenses[0].expense_item.map((el) => el.price).slice(0, 8)
-        : [];
+    getSelectedDates() {
+      if (this.selectedDate.length == 1) {
+        return "Expenses on" + this.selectedDate[0];
+      } else {
+        return (
+          "Expenses between: " +
+          this.selectedDate[1] +
+          "-" +
+          this.selectedDate[0]
+        );
+      }
     },
     avg() {
       let sum = 0;
       this.sparklineNumbers.forEach((el) => (sum += el));
       return Math.round(sum);
+    },
+  },
+  watch: {
+    selectedDate: {
+      handler() {
+        console.log("change");
+        let dates = [];
+        this.expenses?.forEach((el) => {
+          if (this.isDateBetween(el.date)) {
+            dates.push(el);
+          }
+        });
+        this.dates = dates;
+        this.getSparklineNumbers();
+      },
+      deep: true,
     },
   },
   async mounted() {
