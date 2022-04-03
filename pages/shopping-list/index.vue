@@ -35,7 +35,7 @@
         <template v-slot:top>
           <v-text-field
             v-model="search"
-            label="Search (UPPER CASE ONLY)"
+            label="Search"
             class="mx-4"
           ></v-text-field>
         </template>
@@ -54,26 +54,30 @@
             <span class="text-h5">Add Shopping List</span>
           </v-card-title>
 
-        <v-chip
-            class="ma-2"
-            color="primary"
+          <v-card-text>
+            <v-subtitle>Preporučeno na temelju navika</v-subtitle>
+          </v-card-text>
+          <v-card-text>
+            <v-chip
+              v-for="(r, index) in recommendations"
+              :key="index"
+              @click="addNewItem(r.itemId)"
             >
-            Primary
-        </v-chip>
+              {{ r.itemId }}
+              <v-icon>mdi-plus</v-icon>
+            </v-chip>
+          </v-card-text>
 
-          <v-card-title>
-            <form @change="upload">
-              <input
-                type="file"
-                ref="getFile"
-                style="display: none"
-                name="thefile"
-              />
-            </form>
-            <v-btn color="blue darken-1" text @click="$refs.getFile.click()">
-              Pre-fill from invoice
-            </v-btn>
-          </v-card-title>
+          <v-card-text>
+            <v-chip
+              v-for="(r, index) in opgs"
+              :key="index"
+              @click="otvori($event, r.website_url)"
+            >
+              <b>{{ r.description }} &nbsp; </b> ({{ r.name }}, {{ r.address }})
+              <v-icon>mdi-open-in-new</v-icon> <br />
+            </v-chip>
+          </v-card-text>
           <v-card-text>
             <v-container>
               <v-row>
@@ -98,27 +102,35 @@
                 </v-col>
               </v-row>
               <p v-if="newExpense.expense_items.length > 0">Items</p>
-              <v-row v-for="item in newExpense.expense_items" :key="item.id">
-                <v-col cols="12" sm="6" md="4">
+              <v-row
+                v-for="(item, index) in newExpense.expense_items"
+                :key="index"
+              >
+                <v-col cols="12" sm="6" md="5">
                   <v-text-field
                     label="Title"
                     required
                     v-model="item.title"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="3">
                   <v-text-field
                     label="Amount"
                     v-model="item.amount"
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="3">
                   <v-text-field
                     label="Price"
                     v-model="item.price"
                   ></v-text-field>
                 </v-col>
+                <div class="flex justify-center items-center">
+                  <v-icon @click="deleteItem(index)" class="cursor-pointer"
+                    >mdi-delete</v-icon
+                  >
+                </div>
               </v-row>
               <v-row>
                 <v-btn color="blue darken-1" text @click="addNewItem">
@@ -126,7 +138,6 @@
                 </v-btn>
               </v-row>
             </v-container>
-            <small>*indicates required field</small>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -159,6 +170,22 @@ import dayjs from "dayjs";
 export default {
   data() {
     return {
+      opgs: [
+        {
+          name: "OPG Harači",
+          description: "Ulje",
+          address: "Ulica Močile 67, 48000 Koprivnica",
+          website_url: "https://www.opg-haraci.hr/",
+          freeDelivery: true,
+        },
+        {
+          name: "OPG Brleković",
+          description: "Med",
+          address: "Turkovčina 93, 10381 Bedenica",
+          website_url: "https://www.opg-brlekovic.hr/",
+          freeDelivery: true,
+        },
+      ],
       search: "",
       expenses: [],
       selectedExpenses: [],
@@ -169,11 +196,17 @@ export default {
         merchant: "",
         date: "",
         expense_items: [],
+        recommendations: [],
       },
     };
   },
   async mounted() {
     this.$nextTick(async () => {
+      const recommendations = await this.$axios.$get("/api/personalization");
+      this.recommendations = recommendations.itemList.sort(
+        (a, b) => a.score > b.score
+      );
+      this.recommendations.length = 2;
       const expensesx = await this.$axios.$get(
         "/api/expenses/user/shopping-list",
         {
@@ -239,6 +272,10 @@ export default {
     },
   },
   methods: {
+    otvori(e, url) {
+      e.preventDefault();
+      window.open(url);
+    },
     filterOnlyCapsText(value, search, item) {
       return (
         value != null &&
@@ -250,8 +287,20 @@ export default {
     formatDate(date) {
       return dayjs(date).format("DD/MM/YYYY");
     },
-    addNewItem() {
-      this.newExpense.expense_items.push({ title: "", amount: "", price: "" });
+    addNewItem(title) {
+      this.newExpense.expense_items.push({
+        title: (title && typeof title === "string") ? title: "",
+        amount: "",
+        price: "",
+      });
+      if (title && typeof title === "string") {
+        this.recommendations = this.recommendations.filter(
+          (r) => r.itemId != title
+        );
+      }
+    },
+    deleteItem(index) {
+      this.newExpense.expense_items.splice(index, 1);
     },
     async upload(event) {
       event.preventDefault();

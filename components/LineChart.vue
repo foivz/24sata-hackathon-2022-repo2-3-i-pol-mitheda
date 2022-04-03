@@ -37,7 +37,7 @@ export default {
 
       this.data.forEach((el) => {
         const date = new Date(el.date);
-        if (date.getMonth() === new Date().getMonth()) {
+        if (date.getMonth()  === new Date().getMonth() - 1) {
           perDay[date.getDate() + 1] += el.expense_item.reduce(
             (prev, next) => prev + next.amount * next.price,
             0

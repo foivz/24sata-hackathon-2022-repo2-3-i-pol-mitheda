@@ -5,12 +5,7 @@
         class="flex bg-gray-100 relative min-h-screen"
         @click="chatOpen = false"
       >
-        <div class="absolute w-full h-64 overflow-hidden">
-          <img
-            height="300"
-            src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-          />
-        </div>
+        <div class="absolute w-full h-64 overflow-hidden bgImage"></div>
         <Sidebar />
         <Nuxt />
         <div class="bot-float">
@@ -60,6 +55,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.bgImage {
+  background: url("https://cdn.vuetifyjs.com/images/parallax/material2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .hydrated {
   .button {
     background-color: blue !important;
