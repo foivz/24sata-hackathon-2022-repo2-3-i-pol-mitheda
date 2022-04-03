@@ -1,11 +1,9 @@
 <template>
   <div class="h-full w-full z-50">
-    <div class="mb-16 flex items-center">
-
-    </div>
+    <div class="mb-16 flex items-center"></div>
     <div class="m-8 flex items-center">
       <p
-        class="font-extrabold text-2xl mr-4 text-white"
+        class="font-extrabold text-4xl mr-4 text-white"
         style="margin-bottom: 0px"
       >
         Finanko
@@ -18,12 +16,12 @@
       :class="{ 'grid-cols-8': gridView, 'grid-cols-1': !gridView }"
     >
       <v-card elevation="2" class="col-span-3">
-      <div
-        class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
-        style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%)"
-      >
-        <DatePicker @input="(e) => (selectedDate = e)" class="col-span-2" />
-      </div>
+        <div
+          class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
+          style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%)"
+        >
+          <DatePicker @input="(e) => (selectedDate = e)" class="col-span-2" />
+        </div>
         <DoughnutChart
           class="bg-white rounded-lg m-4"
           :total="total"
@@ -65,14 +63,14 @@ export default {
       return dayjs(date).format("YYYY-MM-DD");
     },
     updateChartData() {
-      let breakdown = {}
+      let breakdown = {};
       this.dates.forEach((el) => {
-        breakdown[el.category] = 0
+        breakdown[el.category] = 0;
         el.expense_item.forEach((ex_el) => {
           breakdown[el.category] += ex_el.price * ex_el.amount;
         });
         if (breakdown[el.category] === 0) {
-          delete breakdown[el.category]
+          delete breakdown[el.category];
         }
       });
       this.sparklineNumbers = breakdown;
@@ -82,7 +80,7 @@ export default {
         return date == this.selectedDate;
       } else {
         if (date >= this.selectedDate[0] && date <= this.selectedDate[1]) {
-          return true;  
+          return true;
         } else {
           return false;
         }
@@ -110,10 +108,10 @@ export default {
     },
     total() {
       let sum = 0;
-      Object.keys(this.sparklineNumbers).forEach(key => {
-        sum += this.sparklineNumbers[key] 
-      })
-      return sum
+      Object.keys(this.sparklineNumbers).forEach((key) => {
+        sum += this.sparklineNumbers[key];
+      });
+      return sum;
     },
   },
   watch: {

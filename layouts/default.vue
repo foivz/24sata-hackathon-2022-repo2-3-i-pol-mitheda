@@ -5,7 +5,12 @@
         class="flex bg-gray-100 relative min-h-screen"
         @click="chatOpen = false"
       >
-        <div class="bg-green-400 absolute w-full h-64" />
+        <div class="absolute w-full">
+          <v-parallax
+            height="300"
+            src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          ></v-parallax>
+        </div>
         <Sidebar />
         <Nuxt />
         <div class="bot-float">

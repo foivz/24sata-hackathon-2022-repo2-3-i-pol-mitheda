@@ -3,7 +3,7 @@
     <div class="md:col-span-5">
       <div class="m-8 flex items-center">
         <p
-          class="font-extrabold text-2xl mr-4 text-white"
+          class="font-extrabold text-4xl mr-4 text-white"
           style="margin-bottom: 0px"
         >
           Add listing

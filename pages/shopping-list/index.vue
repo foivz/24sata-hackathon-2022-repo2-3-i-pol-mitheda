@@ -2,7 +2,7 @@
   <div class="h-full w-full m-8 z-50">
     <div class="m-8 flex items-center">
       <p
-        class="font-extrabold text-2xl mr-4 text-white"
+        class="font-extrabold text-4xl mr-4 text-white"
         style="margin-bottom: 0px"
       >
         All Shopping Lists
@@ -42,7 +42,7 @@
       </v-data-table>
     </div>
 
-    <div class="grid grid-cols-6 gap-8 m-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 m-8">
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn depressed color="primary" dark v-bind="attrs" v-on="on">
