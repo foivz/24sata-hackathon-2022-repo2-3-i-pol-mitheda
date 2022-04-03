@@ -243,8 +243,8 @@ export default {
       return dayjs(date).format("DD/MM/YYYY");
     },
     addNewItem(title) {
-      this.newExpense.expense_items.push({ title: title || "", amount: "", price: "" });
-      if (title) {
+      this.newExpense.expense_items.push({ title: title && typeof title === "string" || "", amount: "", price: "" });
+      if (title && typeof title === "string") {
         this.recommendations = this.recommendations.filter(r => r.itemId != title)
       }
     },
