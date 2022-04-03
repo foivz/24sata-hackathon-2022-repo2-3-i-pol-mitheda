@@ -40,8 +40,8 @@
     </v-dialog>
   </div>
 </template>
+
 <script>
-import dayjs from "dayjs";
 export default {
   name: "DatePicker",
 
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       date_modal: null,
-      date_value: null,
+      date_value: ["2022-04-03"],
     };
   },
 

@@ -25,7 +25,7 @@
       :class="{ 'grid-cols-8': gridView, 'grid-cols-1': !gridView }"
     >
       <v-card elevation="2" class="col-span-3">
-        <DoughnutChart class="bg-white rounded-lg m-4" />
+        <DoughnutChart class="bg-white rounded-lg m-4" :total="total" />
       </v-card>
       <v-card
         v-show="sparklineNumbers.length > 0"
@@ -46,11 +46,11 @@
             </div>
             <div>
               <span
-                v-if="avg"
+                v-if="total"
                 class="text-h3 font-weight-black"
-                v-text="avg"
+                v-text="total"
               ></span>
-              <!-- <strong v-if="avg">BPM</strong> -->
+              <!-- <strong v-if="total">BPM</strong> -->
             </div>
           </v-row>
 
@@ -120,12 +120,17 @@ export default {
       if (this.selectedDate.length == 1) {
         return date == this.selectedDate;
       } else {
-        return dayjs(date).isBetween(
+        if (date >= this.selectedDate[0] && date <= this.selectedDate[1]) {
+          return true;
+        } else {
+          return false;
+        }
+        /* return dayjs(date).isBetween(
           this.selectedDate[0],
           this.selectedDate[1],
           null,
           "[)"
-        );
+        ); */
       }
     },
   },
@@ -142,7 +147,7 @@ export default {
         );
       }
     },
-    avg() {
+    total() {
       let sum = 0;
       this.sparklineNumbers.forEach((el) => (sum += el));
       return Math.round(sum);
@@ -151,14 +156,17 @@ export default {
   watch: {
     selectedDate: {
       handler() {
-        console.log("change");
-        let dates = [];
-        this.expenses?.forEach((el) => {
+        console.log("yo");
+
+        let newDates = [];
+        this.expenses.forEach((el) => {
+          console.log(el.date);
+          console.log(this.isDateBetween(el.date));
           if (this.isDateBetween(el.date)) {
-            dates.push(el);
+            newDates.push(el);
           }
         });
-        this.dates = dates;
+        this.dates = newDates;
         this.getSparklineNumbers();
       },
       deep: true,
@@ -176,6 +184,17 @@ export default {
         el.created_at = this.formatDate(el.created_at);
         return el;
       });
+
+      let newDates = [];
+      this.expenses.forEach((el) => {
+        console.log(el.date);
+        console.log(this.isDateBetween(el.date));
+        if (this.isDateBetween(el.date)) {
+          newDates.push(el);
+        }
+      });
+      this.dates = newDates;
+      this.getSparklineNumbers();
     });
   },
 };
