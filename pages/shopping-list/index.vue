@@ -55,12 +55,29 @@
           </v-card-title>
 
           <v-card-text>
-            <v-chip v-for="(r, index) in recommendations" :key="index" @click="addNewItem(r.itemId)">
+          <v-subtitle>Preporučeno na temelju navika</v-subtitle>
+          </v-card-text>
+          <v-card-text>
+            <v-chip
+              v-for="(r, index) in recommendations"
+              :key="index"
+              @click="addNewItem(r.itemId)"
+            >
               {{ r.itemId }}
               <v-icon>mdi-plus</v-icon>
             </v-chip>
           </v-card-text>
 
+          <v-card-text>
+            <v-chip
+              v-for="(r, index) in opgs"
+              :key="index"
+              @click="otvori($event, r.website_url)"
+            >
+              <b>{{ r.description }} &nbsp; </b> ({{ r.name }}, {{ r.address }})
+              <v-icon>mdi-open-in-new</v-icon> <br />
+            </v-chip>
+          </v-card-text>
           <v-card-text>
             <v-container>
               <v-row>
@@ -145,6 +162,22 @@ import dayjs from "dayjs";
 export default {
   data() {
     return {
+      opgs: [
+        {
+          name: "OPG Harači",
+          description: "Ulje",
+          address: "Ulica Močile 67, 48000 Koprivnica",
+          website_url: "https://www.opg-haraci.hr/",
+          freeDelivery: true,
+        },
+        {
+          name: "OPG Brleković",
+          description: "Med",
+          address: "Turkovčina 93, 10381 Bedenica",
+          website_url: "https://www.opg-brlekovic.hr/",
+          freeDelivery: true,
+        },
+      ],
       search: "",
       expenses: [],
       selectedExpenses: [],
@@ -231,6 +264,10 @@ export default {
     },
   },
   methods: {
+    otvori(e, url) {
+      e.preventDefault();
+      window.open(url);
+    },
     filterOnlyCapsText(value, search, item) {
       return (
         value != null &&
@@ -243,9 +280,15 @@ export default {
       return dayjs(date).format("DD/MM/YYYY");
     },
     addNewItem(title) {
-      this.newExpense.expense_items.push({ title: title && typeof title === "string" || "", amount: "", price: "" });
+      this.newExpense.expense_items.push({
+        title: (title && typeof title === "string") || "",
+        amount: "",
+        price: "",
+      });
       if (title && typeof title === "string") {
-        this.recommendations = this.recommendations.filter(r => r.itemId != title)
+        this.recommendations = this.recommendations.filter(
+          (r) => r.itemId != title
+        );
       }
     },
     async upload(event) {

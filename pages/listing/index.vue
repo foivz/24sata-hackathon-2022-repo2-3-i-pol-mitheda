@@ -50,6 +50,14 @@
               required
             ></v-text-field>
 
+            <v-text-field
+              v-model="address"
+              :rules="descriptionRules"
+              label="Website URL"
+              outlined
+              required
+            ></v-text-field>
+
             <v-checkbox
               v-model="freeDelivery"
               label="Free delivery"
