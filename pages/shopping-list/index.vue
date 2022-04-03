@@ -54,7 +54,7 @@
             </template>
             <v-card>
               <v-card-title>
-                <span class="text-h5">Add expense</span>
+                <span class="text-h5">Add Shopping List</span>
               </v-card-title>
 
               <v-card-title>
@@ -166,7 +166,7 @@ export default {
   },
   async mounted() {
     this.$nextTick(async () => {
-      const expensesx = await this.$axios.$get("/api/expenses/user", {
+      const expensesx = await this.$axios.$get("/api/expenses/user/shopping-list", {
         params: {
           token: this.$store.state.user.token,
         },
@@ -180,10 +180,11 @@ export default {
         el.expense_item = el.expense_item.map(itm => {
           itm.priceHRK = itm.price + " HRK"
           return itm
-        })
+        });
         el.totalHRK = el.total + " HRK"
         return el;
       });
+      
     });
   },
   computed: {
@@ -205,7 +206,7 @@ export default {
         },
         {
           text: "Total",
-          value: "totalHRK",
+          value: "totalHRK",        
         },
         { text: "Created At", value: "created_at" },
       ];
@@ -265,7 +266,7 @@ export default {
           date: this.newExpense.date,
           category: this.newExpense.category,
           items: this.newExpense.expense_items,
-          isShoppingList: 0,
+          isShoppingList: 1,
       });
 
       console.log(response)

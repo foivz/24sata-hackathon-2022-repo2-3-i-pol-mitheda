@@ -77,6 +77,7 @@ export default {
           items: [
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color:"green darken-2" },
             { title: 'Expenses', icon: 'mdi-image', route: '/expenses', color:"red darken-2" },
+            { title: 'Shopping List', icon: 'mdi-playlist-edit', route: '/shopping-list', color:"red darken-2" },
             { title: 'Account', icon: 'mdi-account', route: '/user', color:"blue darken-2" },
         ],
       }
