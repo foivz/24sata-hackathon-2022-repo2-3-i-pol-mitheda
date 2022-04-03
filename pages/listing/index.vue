@@ -1,14 +1,14 @@
 <template>
-  <div class="h-full w-full m-8 z-50 grid md:grid-cols-3">
-    <div class="md:col-span-2">
+  <div class="h-full w-full m-8 z-50 grid md:grid-cols-5">
+    <div class="md:col-span-5">
       <div class="m-8 flex items-center">
         <p
-          class="font-extrabold text-2xl mr-4 text-white"
+          class="font-extrabold text-4xl mr-4 text-white"
           style="margin-bottom: 0px"
         >
           Add listing
         </p>
-        <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
+        <v-icon color="#ffffff" class="absolute">mdi-paperclip</v-icon>
       </div>
       <div class="grid gap-4">
         <v-card elevation="2" class="p-8">
@@ -55,29 +55,17 @@
               label="Free delivery"
             ></v-checkbox>
 
-            <v-text-field
-              v-model="paymentInfo"
-              :rules="descriptionRules"
-              label="Payment info"
-              outlined
-              readonly
-            ></v-text-field>
-
-            <v-text-field
-              v-model="nekiBrojIdkLol"
-              :rules="descriptionRules"
-              label="SWIFT/BIC"
-              outlined
-              readonly
-            ></v-text-field>
-
-            <v-text-field
-              v-model="iban"
-              :rules="descriptionRules"
-              label="IBAN"
-              outlined
-              readonly
-            ></v-text-field>
+            <div>
+              <p class="my-2" style="margin-bottom: 0px">
+                Payment Info: {{ paymentInfo }}
+              </p>
+              <v-divider></v-divider>
+              <p class="my-2" style="margin-bottom: 0px">
+                SWIFT/BIC: {{ nekiBrojIdkLol }}
+              </p>
+              <v-divider></v-divider>
+              <p class="my-2" style="margin-bottom: 0px">IBAN: {{ iban }}</p>
+            </div>
 
             <v-snackbar v-model="snackbar">
               {{ text }}
@@ -117,7 +105,7 @@ export default {
     descriptionRules: [(v) => !!v || "Description is required"],
     address: "",
     freeDelivery: false,
-    paymentInfo: "idk eki info",
+    paymentInfo: "Payment from blekso",
     nekiBrojIdkLol: "123123",
     iban: "HR1210010051863000160",
     snackbar: false,

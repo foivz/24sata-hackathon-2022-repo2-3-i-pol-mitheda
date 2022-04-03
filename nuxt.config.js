@@ -15,9 +15,6 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ["~/assets/css/style.scss"],
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/amplify.js", mode: "client" },
@@ -54,11 +51,8 @@ export default {
   },
 
   vuetify: {
-    customVariables: ["~/assets/css/vuetify.scss"],
+    customVariables: ["~/assets/variables.scss"],
     treeShake: true,
-    options: {
-      customProperties: true,
-    },
   },
 
   proxy: {

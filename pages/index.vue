@@ -1,37 +1,34 @@
 <template>
   <div class="h-full w-full z-50">
-    <div class="mb-16 flex items-center">
-      <div
-        class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
-        style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%)"
-      >
-        <DatePicker @input="(e) => (selectedDate = e)" class="col-span-2" />
-      </div>
-      <v-btn class="mx-2" fab dark color="teal" @click="gridView = !gridView">
-        <v-icon dark> mdi-format-list-bulleted-square </v-icon>
-      </v-btn>
-    </div>
+    <div class="mb-16 flex items-center"></div>
     <div class="m-8 flex items-center">
       <p
-        class="font-extrabold text-2xl mr-4 text-white"
+        class="font-extrabold text-4xl mr-4 text-white"
         style="margin-bottom: 0px"
       >
-        Dashboard
+        Finanko
       </p>
       <v-icon color="#ffffff" class="absolute">mdi-home</v-icon>
     </div>
+
     <div
       class="m-8 grid gap-8"
       :class="{ 'grid-cols-8': gridView, 'grid-cols-1': !gridView }"
     >
       <v-card elevation="2" class="col-span-3">
+        <div
+          class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
+          style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%)"
+        >
+          <DatePicker @input="(e) => (selectedDate = e)" class="col-span-2" />
+        </div>
         <DoughnutChart
           class="bg-white rounded-lg m-4"
           :total="total"
           :numbers="sparklineNumbers"
         />
       </v-card>
-      <v-card
+      <!-- <v-card
         v-show="sparklineNumbers.length > 0"
         elevation="2"
         class="col-span-5 p-8"
@@ -54,7 +51,6 @@
                 class="text-h3 font-weight-black"
                 v-text="total"
               ></span>
-              <!-- <strong v-if="total">BPM</strong> -->
             </div>
           </v-row>
 
@@ -82,7 +78,7 @@
             Expenses {{ selectedDate }}
           </div>
         </div>
-      </v-card>
+      </v-card> -->
     </div>
   </div>
 </template>
@@ -101,24 +97,25 @@ export default {
       expenses: [],
       checking: false,
       dates: [],
-      sparklineNumbers: [],
+      sparklineNumbers: {},
     };
   },
   methods: {
     formatDate(date) {
       return dayjs(date).format("YYYY-MM-DD");
     },
-    getSparklineNumbers() {
-      let numbers = [];
-      let sum;
+    updateChartData() {
+      let breakdown = {};
       this.dates.forEach((el) => {
-        sum = 0;
+        breakdown[el.category] = 0;
         el.expense_item.forEach((ex_el) => {
-          sum += ex_el.price;
+          breakdown[el.category] += ex_el.price * ex_el.amount;
         });
-        numbers.push(sum);
+        if (breakdown[el.category] === 0) {
+          delete breakdown[el.category];
+        }
       });
-      this.sparklineNumbers = numbers;
+      this.sparklineNumbers = breakdown;
     },
     isDateBetween(date) {
       if (this.selectedDate.length == 1) {
@@ -153,25 +150,23 @@ export default {
     },
     total() {
       let sum = 0;
-      this.sparklineNumbers.forEach((el) => (sum += el));
-      return Math.round(sum);
+      Object.keys(this.sparklineNumbers).forEach((key) => {
+        sum += this.sparklineNumbers[key];
+      });
+      return sum;
     },
   },
   watch: {
     selectedDate: {
       handler() {
-        console.log("yo");
-
         let newDates = [];
         this.expenses.forEach((el) => {
-          console.log(el.date);
-          console.log(this.isDateBetween(el.date));
           if (this.isDateBetween(el.date)) {
             newDates.push(el);
           }
         });
         this.dates = newDates;
-        this.getSparklineNumbers();
+        this.updateChartData();
       },
       deep: true,
     },
@@ -191,14 +186,12 @@ export default {
 
       let newDates = [];
       this.expenses.forEach((el) => {
-        console.log(el.date);
-        console.log(this.isDateBetween(el.date));
         if (this.isDateBetween(el.date)) {
           newDates.push(el);
         }
       });
       this.dates = newDates;
-      this.getSparklineNumbers();
+      this.updateChartData();
     });
   },
 };

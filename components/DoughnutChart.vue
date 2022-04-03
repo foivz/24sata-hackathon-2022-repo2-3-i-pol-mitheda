@@ -3,9 +3,14 @@
     <div
       class="absolute w-full h-full flex flex-col items-center justify-center"
     >
-      <p class="text-2xl font-bold" style="margin-bottom: 0px">Total:</p>
-      <p class="text-5xl font-bold" style="margin-bottom: 0px">
-        {{ total }}
+      <p class="text-2xl" style="margin-bottom: 0px">Total:</p>
+      <p class="text-3xl font-bold" style="margin-bottom: 0px">
+        {{
+          new Intl.NumberFormat("hr-HR", {
+            style: "currency",
+            currency: "HRK",
+          }).format(total)
+        }}
       </p>
     </div>
     <canvas ref="myChart" width="400" height="400"></canvas>
@@ -22,15 +27,36 @@ export default {
       default: 0,
     },
     numbers: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {
+        return {};
+      },
     },
   },
   watch: {
     numbers: {
       handler() {
-        this.data.data = this.numbers;
-        this.data.labels = ["Insurance", "Gifts"];
+        this.data.datasets = [
+          {
+            label: "My First Dataset",
+            data: Object.values(this.numbers),
+            backgroundColor: Object.values(this.numbers).map(
+              (v, i) => {
+                var letters = "0123456789ABCDEF";
+                var color = "#";
+                for (var i = 0; i < 6; i++) {
+                  color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+              }
+              // ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"][
+              //   3 % i
+              // ]
+            ),
+            hoverOffset: 4,
+          },
+        ];
+        this.data.labels = Object.keys(this.numbers);
         this.refresh();
       },
       deep: true,
@@ -38,10 +64,12 @@ export default {
   },
   methods: {
     refresh() {
+      console.log("refreshing");
       this.$nextTick(() => {
         const ctx = this.$refs.myChart.getContext("2d");
+        console.log("this.$refs.myChart");
         console.log(this.$refs.myChart);
-        const myChart = new Chart(ctx, {
+        new Chart(ctx, {
           type: "doughnut",
           data: this.data,
           options: {
@@ -58,22 +86,24 @@ export default {
   data() {
     return {
       data: {
-        labels: ["Insurance", "Gifts", "Clothes"],
+        labels: Object.keys(this.numbers),
         datasets: [
           {
             label: "My First Dataset",
-            data: [300, 50, 100],
-            backgroundColor: [
-              "rgb(255, 99, 132)",
-              "rgb(54, 162, 235)",
-              "rgb(255, 205, 86)",
-            ],
+            data: Object.values(this.numbers),
+            backgroundColor: Object.values(this.numbers).map(
+              (v, i) =>
+                ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"][
+                  3 % i
+                ]
+            ),
             hoverOffset: 4,
           },
         ],
       },
     };
   },
+
   mounted() {
     this.refresh();
   },

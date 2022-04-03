@@ -17,7 +17,7 @@
 
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item class="my-2" v-for="item in items" :key="item.title" link>
           <NuxtLink :to="item.route" class="flex w-full">
             <v-list-item-icon>
               <v-icon :color="item.color">{{ item.icon }}</v-icon>
@@ -177,17 +177,37 @@ export default {
       );
     },
   },
-    data() {
-        return {
-            sidebarExpanded: true,
-            items: [
-            { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color:"green darken-2" },
-            { title: 'Expenses', icon: 'mdi-image', route: '/expenses', color:"red darken-2" },
-            { title: 'Shopping List', icon: 'mdi-playlist-edit', route: '/shopping-list', color:"red darken-2" }
-        ],
-    }
-   
-  }
+  data() {
+    return {
+      sidebarExpanded: true,
+      items: [
+        {
+          title: "Dashboard",
+          icon: "mdi-view-dashboard",
+          route: "/",
+          color: "green darken-2",
+        },
+        {
+          title: "Expenses",
+          icon: "mdi-image",
+          route: "/expenses",
+          color: "red darken-2",
+        },
+        {
+          title: "Shopping List",
+          icon: "mdi-playlist-edit",
+          route: "/shopping-list",
+          color: "blue darken-2",
+        },
+        {
+          title: "Listing",
+          icon: "mdi-paperclip",
+          route: "/listing",
+          color: "purple darken-2",
+        },
+      ],
+    };
+  },
 };
 </script>
 
