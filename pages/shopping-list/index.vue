@@ -54,19 +54,13 @@
             <span class="text-h5">Add Shopping List</span>
           </v-card-title>
 
-          <v-card-title>
-            <form @change="upload">
-              <input
-                type="file"
-                ref="getFile"
-                style="display: none"
-                name="thefile"
-              />
-            </form>
-            <v-btn color="blue darken-1" text @click="$refs.getFile.click()">
-              Pre-fill from invoice
-            </v-btn>
-          </v-card-title>
+          <v-card-text>
+            <v-chip v-for="(r, index) in recommendations" :key="index" @click="addNewItem(r.itemId)">
+              {{ r.itemId }}
+              <v-icon>mdi-plus</v-icon>
+            </v-chip>
+          </v-card-text>
+
           <v-card-text>
             <v-container>
               <v-row>
@@ -162,11 +156,17 @@ export default {
         merchant: "",
         date: "",
         expense_items: [],
+        recommendations: [],
       },
     };
   },
   async mounted() {
     this.$nextTick(async () => {
+      const recommendations = await this.$axios.$get("/api/personalization");
+      this.recommendations = recommendations.itemList.sort(
+        (a, b) => a.score > b.score
+      );
+      this.recommendations.length = 2;
       const expensesx = await this.$axios.$get(
         "/api/expenses/user/shopping-list",
         {
@@ -243,8 +243,11 @@ export default {
     formatDate(date) {
       return dayjs(date).format("DD/MM/YYYY");
     },
-    addNewItem() {
-      this.newExpense.expense_items.push({ title: "", amount: "", price: "" });
+    addNewItem(title) {
+      this.newExpense.expense_items.push({ title: title || "", amount: "", price: "" });
+      if (title) {
+        this.recommendations = this.recommendations.filter(r => r.itemId != title)
+      }
     },
     async upload(event) {
       event.preventDefault();
