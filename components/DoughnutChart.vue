@@ -36,27 +36,6 @@ export default {
   watch: {
     numbers: {
       handler() {
-        this.data.datasets = [
-          {
-            label: "My First Dataset",
-            data: Object.values(this.numbers),
-            backgroundColor: Object.values(this.numbers).map(
-              (v, i) => {
-                var letters = "0123456789ABCDEF";
-                var color = "#";
-                for (var i = 0; i < 6; i++) {
-                  color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
-              }
-              // ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"][
-              //   3 % i
-              // ]
-            ),
-            hoverOffset: 4,
-          },
-        ];
-        this.data.labels = Object.keys(this.numbers);
         this.refresh();
       },
       deep: true,
@@ -64,14 +43,28 @@ export default {
   },
   methods: {
     refresh() {
-      console.log("refreshing");
       this.$nextTick(() => {
         const ctx = this.$refs.myChart.getContext("2d");
-        console.log("this.$refs.myChart");
-        console.log(this.$refs.myChart);
         new Chart(ctx, {
           type: "doughnut",
-          data: this.data,
+          data: {
+            labels: Object.keys(this.numbers),
+            datasets: [
+              {
+                label: "My First Dataset",
+                data: Object.values(this.numbers),
+                backgroundColor: Object.values(this.numbers).map((v, i) => {
+                  var letters = "0123456789ABCDEF";
+                  var color = "#";
+                  for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                  }
+                  return color;
+                }),
+                hoverOffset: 4,
+              },
+            ],
+          },
           options: {
             scales: {
               y: {
@@ -81,35 +74,6 @@ export default {
           },
         });
       });
-    },
-  },
-  data() {
-    return {
-      data: {
-        labels: Object.keys(this.numbers),
-        datasets: [
-          {
-            label: "My First Dataset",
-            data: Object.values(this.numbers),
-            backgroundColor: Object.values(this.numbers).map(
-              (v, i) =>
-                ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"][
-                  3 % i
-                ]
-            ),
-            hoverOffset: 4,
-          },
-        ],
-      },
-    };
-  },
-
-  mounted() {
-    this.refresh();
-  },
-  computed: {
-    calculateChange() {
-      return true;
     },
   },
 };
