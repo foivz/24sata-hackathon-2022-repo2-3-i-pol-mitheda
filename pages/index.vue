@@ -12,27 +12,23 @@
     </div>
 
     <div class="m-8 grid md:grid-cols-2 lg:grid-cols-8 gap-8">
-      <v-card elevation="2" class="col-span-3">
-        <div
-          class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
-          style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%)"
-        >
-          <DatePicker @input="(e) => (selectedDate = e)" class="col-span-2" />
-        </div>
-        <DoughnutChart
-          class="bg-white rounded-lg m-4"
-          :total="total"
-          :numbers="sparklineNumbers"
-        />
-      </v-card>
-      <v-card
-        elevation="2"
-        class="col-span-5 p-8"
-      >
-        <LineChart
-          class="bg-white rounded-lg m-4"
-          :data="expenses"
-        />
+      <div class="col-span-3">
+        <v-card elevation="2">
+          <div
+            class="m-8 px-4 py-2 gap-8 bg-white rounded-3xl w-64"
+            style="box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%)"
+          >
+            <DatePicker @input="(e) => (selectedDate = e)" class="col-span-2" />
+          </div>
+          <DoughnutChart
+            class="bg-white rounded-lg m-4"
+            :total="total"
+            :numbers="sparklineNumbers"
+          />
+        </v-card>
+      </div>
+      <v-card elevation="2" class="col-span-5 p-8">
+        <LineChart class="bg-white rounded-lg m-4" :data="expenses" />
       </v-card>
     </div>
   </div>
