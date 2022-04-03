@@ -35,7 +35,7 @@
         <template v-slot:top>
           <v-text-field
             v-model="search"
-            label="Search (UPPER CASE ONLY)"
+            label="Search"
             class="mx-4"
           ></v-text-field>
         </template>
